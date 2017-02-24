@@ -5,23 +5,16 @@
  */
 package chat.app;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-
-/**
- * FXML Controller class
- *
- * @author Joakim
- */
-public class loginnController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
+ 
+public class loginnController {
+    @FXML private Text actiontarget;
     
+    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
+        actiontarget.setText("Sign in button pressed");
+    }
+
 }
+
