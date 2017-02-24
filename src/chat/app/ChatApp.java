@@ -14,8 +14,15 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class ChatApp implements Runnable {
+public class ChatApp extends Application implements Runnable {
 
   // The client socket
   private static Socket clientSocket = null;
@@ -27,7 +34,44 @@ public class ChatApp implements Runnable {
   private static BufferedReader inputLine = null;
   private static boolean closed = false;
   
-  public static void main(String[] args) {
+  
+  private Stage stage;
+    
+  @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("loginn.fxml"));
+        primaryStage.setTitle("Multi-client Socket - Client");
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
+    }
+    
+    @Override
+    public void stop()
+    {
+        System.exit(0);
+    }
+    
+  public static void main(String[] args) throws IOException
+    {
+      launch(args);
+    }
+      
+ 
+  private Parent replaceSceneContent(String fxml) throws Exception {
+        Parent page = (Parent) FXMLLoader.load(ChatApp.class.getResource(fxml), null, new JavaFXBuilderFactory());
+        Scene scene = stage.getScene();
+        if (scene == null) {
+            scene = new Scene(page, 700, 450);
+            scene.getStylesheets().add(ChatApp.class.getResource("demo.css").toExternalForm());
+            stage.setScene(scene);
+        } else {
+            stage.getScene().setRoot(page);
+        }
+        stage.sizeToScene();
+        return page;
+    }
+  
+  public static void logikk(String[] args){
 
     // The default port.
     int portNumber = 2222;
